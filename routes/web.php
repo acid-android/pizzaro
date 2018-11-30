@@ -12,5 +12,54 @@
 */
 
 Route::get('/', function () {
-    return view('layouts/layout');
-});
+    return view('pages.index');
+})->name('home');
+
+Route::get('/food', function () {
+    return view('pages.food');
+})->name('food');
+
+
+Route::get('/product', function () {
+    return view('pages.product');
+})->name('product');
+
+Route::get('/blog', function () {
+    return view('pages.blog');
+})->name('blog');
+
+Route::get('/article', function () {
+    return view('pages.article');
+})->name('article');
+
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('contact');
+
+Route::get('/error', function () {
+    return view('pages.error');
+})->name('error');
+
+Route::get('/cart', function () {
+    return view('pages.cart');
+})->name('cart');
+
+Route::get('/track', function () {
+    return view('pages.track');
+})->name('track');
+
+Route::get('/store-locator', function () {
+    return view('pages.store-locator');
+})->name('store-locator');
+
+Route::get('/checkout', function () {
+    return view('pages.checkout');
+})->name('checkout');
+
+Route::get('/order-received', function () {
+    return view('pages.order-received');
+})->name('order-received');
