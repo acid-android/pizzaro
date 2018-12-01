@@ -10,71 +10,17 @@
                     </svg>
                 </a>
             </div>
-            <nav id="site-navigation" class="main-navigation"  aria-label="Primary Navigation">
-                <button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span class="close-icon"><i class="po po-close-delete"></i></span><span class="menu-icon"><i class="po po-menu-icon"></i></span><span class=" screen-reader-text">Menu</span></button>
-                <div class="primary-navigation">
-                    <ul id="menu-main-menu" class="menu nav-menu" aria-expanded="false">
-                        <li class="menu-item"><a href="{{route('food')}}">Order Online</a></li>
-                        <li class="menu-item"><a href="{{route('blog')}}">News</a></li>
-                        <li class="menu-item"><a href="{{route('store-locator')}}">Store Locator</a></li>
-                    </ul>
-                </div>
-                <div class="handheld-navigation">
-                    <span class="phm-close">Close</span>
-                    <ul  class="menu">
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-pizza"></i>Pizza</a></li>
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-burger"></i>Burgers</a></li>
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-salads"></i>Salads</a></li>
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-tacos"></i>Tacos</a></li>
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-wraps"></i>Wraps</a></li>
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-fries"></i>Fries</a></li>
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-salads"></i>Salads</a></li>
-                        <li class="menu-item "><a href="{{route('food')}}"><i class="po po-drinks"></i>Drinks</a></li>
-                    </ul>
-                </div>
-            </nav>
             <!-- #site-navigation -->
+            @include('layouts.nav.site')
+
             <div class="header-info-wrapper">
-                <div class="header-phone-numbers">
-                    <span class="intro-text">Call and Order in</span>
-                    <select class="select-city-phone-numbers" name="city-phone-numbers" id="city-phone-numbers">
-                        <option value="54 548 779 654">London</option>
-                        <option value="33 398 621 710">Paris</option>
-                        <option value="718 54 674 021">New York</option>
-                    </select>
-                    <span id="city-phone-number-label" class="phone-number">54 548 779 654</span>
-                </div>
-                <ul class="site-header-cart-v2 menu">
-                    <li class="cart-content ">
-                        <a href="{{route('cart')}}" title="View your shopping cart">
-                            <i class="po po-scooter"></i>
-                            <span>Go to Your Cart</span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="{{route('cart')}}" title="View your shopping cart">
-                                    <span class="count">2 items</span> <span class="amount">$50.00</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+
+                @include('layouts.header-info.info')
+
+                @include('layouts.header-info.cart')
         </div>
-        <div class="pizzaro-secondary-navigation">
-            <nav class="secondary-navigation"  aria-label="Secondary Navigation">
-                <ul  class="menu">
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-pizza"></i>Pizza</a></li>
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-burger"></i>Burgers</a></li>
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-salads"></i>Salads</a></li>
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-tacos"></i>Tacos</a></li>
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-wraps"></i>Wraps</a></li>
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-fries"></i>Fries</a></li>
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-salads"></i>Salads</a></li>
-                    <li class="menu-item"><a href="{{route('food')}}"><i class="po po-drinks"></i>Drinks</a></li>
-                </ul>
-            </nav>
-            <!-- #secondary-navigation -->
-        </div>
+
+
+            @include('layouts.nav.menu-secondary')
     </div>
 </header>

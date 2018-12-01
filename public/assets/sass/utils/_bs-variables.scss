@@ -269,13 +269,13 @@ $cursor-disabled:                not-allowed !default;
 
 //== Dropdowns
 //
-//## Dropdown menu container and contents.
+//## Dropdown nav container and contents.
 
-//** Background for the dropdown menu.
+//** Background for the dropdown nav.
 $dropdown-bg:                    #fff !default;
-//** Dropdown menu `border-color`.
+//** Dropdown nav `border-color`.
 $dropdown-border:                rgba(0,0,0,.15) !default;
-//** Dropdown menu `border-color` **for IE8**.
+//** Dropdown nav `border-color` **for IE8**.
 $dropdown-fallback-border:       #ccc !default;
 //** Divider color for between dropdown items.
 $dropdown-divider-bg:            #e5e5e5 !default;
@@ -287,12 +287,12 @@ $dropdown-link-hover-color:      darken($gray-dark, 5%) !default;
 //** Hover background for dropdown links.
 $dropdown-link-hover-bg:         #f5f5f5 !default;
 
-//** Active dropdown menu item text color.
+//** Active dropdown nav item text color.
 $dropdown-link-active-color:     $component-active-color !default;
-//** Active dropdown menu item background color.
+//** Active dropdown nav item background color.
 $dropdown-link-active-bg:        $component-active-bg !default;
 
-//** Disabled dropdown menu item background color.
+//** Disabled dropdown nav item background color.
 $dropdown-link-disabled-color:   $gray-light !default;
 
 //** Text color for headers within dropdown menus.

@@ -31,7 +31,7 @@
         });
 
         $( '.phm-close' ).on( 'click', function() {
-            $( '.menu-toggle' ).trigger( 'click' );
+            $( '.nav-toggle' ).trigger( 'click' );
         } );
 
         $( document ).on( 'click', function( event ) {
@@ -39,7 +39,7 @@
 
             if ( menuContainer.hasClass( 'toggled' ) ) {
                 if ( ! menuContainer.is( event.target ) && 0 === menuContainer.has( event.target ).length ) {
-                    $( '.menu-toggle' ).trigger( 'click' );
+                    $( '.nav-toggle' ).trigger( 'click' );
                 }
             }
         } );
@@ -454,7 +454,7 @@
 
     menu = container.getElementsByTagName( 'ul' )[0];
 
-    // Hide menu toggle button if menu is empty and return early.
+    // Hide nav toggle button if nav is empty and return early.
     if ( 'undefined' === typeof menu ) {
         button.style.display = 'none';
         return;
@@ -462,8 +462,8 @@
 
     menu.setAttribute( 'aria-expanded', 'false' );
 
-    if ( -1 === menu.className.indexOf( 'nav-menu' ) ) {
-        menu.className += ' nav-menu';
+    if ( -1 === menu.className.indexOf( 'nav-nav' ) ) {
+        menu.className += ' nav-nav';
     }
 
     button.onclick = function() {

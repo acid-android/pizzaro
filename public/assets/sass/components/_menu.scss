@@ -83,11 +83,11 @@ button.menu-toggle {
 	@include clearfix;
 
 	div.menu {
-		display: none; // Hide the default menu to stop both it and the handheld menu displaying, when no primary menu has been set...
+		display: none; // Hide the default nav to stop both it and the handheld nav displaying, when no primary nav has been set...
 	}
 
 	div.menu:last-child {
-		display: block; // ... but display it if a handheld menu hasn't been set either.
+		display: block; // ... but display it if a handheld nav hasn't been set either.
 	}
 
 	.menu {
@@ -234,7 +234,7 @@ button.menu-toggle {
 			text-align: center;
 
 			> li {
-				// The first level menu item
+				// The first level nav item
 				> a {
 					padding: 2em 0;
 					color: #ffc0ca;
