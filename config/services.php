@@ -21,8 +21,8 @@ return [
     ],
 
     'ses' => [
-        'key' => env('SES_KEY'),
-        'secret' => env('SES_SECRET'),
+        'key' => env('sandbox1e292698a46243b08cdebd86575cfbd4.mailgun.org'),
+        'secret' => env('308d76a29ee9861a0b7e7c9209b4b7fb-52cbfb43-e15677b6'),
         'region' => env('SES_REGION', 'us-east-1'),
     ],
 

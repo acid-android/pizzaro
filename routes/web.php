@@ -63,3 +63,10 @@ Route::get('/checkout', function () {
 Route::get('/order-received', function () {
     return view('pages.order-received');
 })->name('order-received');
+
+
+Route::get('/send-email-to-subscriber', function (\Illuminate\Http\Request $request) {
+//    \Illuminate\Support\Facades\Mail::to('murdoc50@gmail.com')->send(new \App\Mail\UserSubscribedEmail());
+    $mailController = new \App\Http\Controllers\Mail\SubscriptionController();
+    return $mailController($request);
+})->name('send-email-to-subscriber');

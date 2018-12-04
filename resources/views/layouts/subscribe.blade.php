@@ -2,10 +2,10 @@
     <div class="caption">
         <h3 class="title">Subscribe to Newsletter</h3>
         <span class="marketing-text">Subscribe to receive our weekly Hot Promotions every Monday!</span>
-        <form>
+        <form action="{{route('send-email-to-subscriber')}}" method="GET">
             <div class="newsletter-form">
-                <input type="text" placeholder="Type here your email address to receive our newsletter">
-                <button class="button" type="button">Sign Up</button>
+                <input type="text" name="email" placeholder="Type here your email address to receive our newsletter">
+                <button class="button" type="submit">Sign Up</button>
             </div>
         </form>
     </div>
