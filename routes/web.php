@@ -15,10 +15,13 @@ Route::get('/', function () {
     return view('pages.index');
 })->name('home');
 
-Route::get('/food', function () {
+Route::get('/food/{key}', function () {
     return view('pages.food');
 })->name('food');
 
+Route::get('/food', function () {
+    return view('pages.food');
+})->name('food.all');
 
 Route::get('/product', function () {
     return view('pages.product');
