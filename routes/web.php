@@ -11,13 +11,11 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (\Illuminate\Http\Request $request) {
     return view('pages.index');
 })->name('home');
 
-Route::get('/food/{key}', function () {
-    return view('pages.food');
-})->name('food');
+Route::get('/food/{key}', "\\" .\App\Http\Controllers\Food\FoodController::class)->name('food');
 
 Route::get('/food', function () {
     return view('pages.food');
