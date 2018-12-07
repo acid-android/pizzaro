@@ -18,12 +18,8 @@ class FoodController extends Controller
     public function __invoke(Request $request, $key)
     {
         $menu = Menu::where('key', $key)->first();
-        $products = $menu->products;
+        $products = $menu->products()->paginate(6);
 
-
-//        dd($products);
-//
-//        dd($key);
         return view('pages.food', [
             'products' => $products
         ]);

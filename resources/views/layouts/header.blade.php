@@ -18,9 +18,11 @@
                 @include('layouts.header-info.info')
 
                 @include('layouts.header-info.cart')
+            </div>
         </div>
 
 
             @include('layouts.nav.menu-secondary')
+
     </div>
 </header>
