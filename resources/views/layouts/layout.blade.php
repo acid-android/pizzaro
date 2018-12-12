@@ -39,8 +39,11 @@
 <script type="text/javascript" src="{{asset('assets/js/scripts.min.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('assets/js/cart/cart_component.js')}}"></script>
-<script type="text/javascript" src="{{asset('assets/js/cart/cart.js')}}"></script>
-@yield('scripts')
+{{--<script type="text/javascript" src="{{asset('assets/js/cart/cart.js')}}"></script>--}}
+{{--@yield('scripts')--}}
+{{----}}
+{{----}}
+{{--@yield('cart_scripts')--}}
 
 </body>
 </html>

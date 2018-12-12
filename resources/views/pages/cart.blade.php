@@ -58,7 +58,7 @@
                                             </a>
                                         </td>
                                         <td class="product-name" data-title="Product">
-                                            <a href="{{route('product',['key' => $item['key']])}}">Bacon Burger</a>
+                                            <a href="{{route('product',['key' => $item['key']])}}">{{ $item['name'] }}</a>
                                             <dl class="variation">
                                                 <dt class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">Pick Size ( <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>{{ $item['price'] }}</span> ):
                                                 </dt>

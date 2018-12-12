@@ -76,7 +76,9 @@
                                 <div class="qty-btn">
                                     <label>Quantity</label>
                                     <div class="quantity">
-                                        <input type="number" name="quantity" value="1" title="Qty" class="input-text qty text"/>
+                                        <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="decrease-button" data-item_id="" data-quantity="1">-</span>
+                                        <span class="quantity-span" style="padding: 5px; width: 3em; height: auto; font-weight: normal; text-align: center;">1</span>
+                                        <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="increase-button" data-item_id="" data-quantity="1">+</span>
                                     </div>
                                 </div>
                                 <input type="hidden" name="add-to-cart" value="50" />
