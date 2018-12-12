@@ -11,6 +11,14 @@
 |
 */
 
+
+App::bind('\\' . \App\Services\Cart::class, function (){
+//    return new \App\Services\Cart(\Illuminate\Support\Facades\Cookie::get('cart'));
+    return new \App\Services\Cart(\App\Cart\CartStorage::find(session()->getId()));
+});
+
+
+
 Route::get('/', function (\Illuminate\Http\Request $request) {
     return view('pages.index');
 })->name('home');
@@ -21,9 +29,7 @@ Route::get('/food', function () {
     return view('pages.food');
 })->name('food.all');
 
-Route::get('/product', function () {
-    return view('pages.product');
-})->name('product');
+Route::get('/product/{key}', "\\" . \App\Http\Controllers\Product\ProductController::class)->name('product');
 
 Route::get('/blog', function () {
     return view('pages.blog');
@@ -71,3 +77,5 @@ Route::get('/send-email-to-subscriber', function (\Illuminate\Http\Request $requ
     $mailController = new \App\Http\Controllers\Mail\SubscriptionController();
     return $mailController($request);
 })->name('send-email-to-subscriber');
+
+//Route::get('/add-to-cart/{id}', "\\" . \App\Http\Controllers\Cart\AddToCartController::class)->name('api-add-to-cart');

@@ -15,17 +15,17 @@
                     @component('components.index.tiles.tiles')
                     @endcomponent
 
-                    @component('components.index.tabs.tabs')
-                    @endcomponent
+                    {{--@component('components.index.tabs.tabs')--}}
+                    {{--@endcomponent--}}
 
-                    @component('components.index.sale-event.event')
-                    @endcomponent
+                    {{--@component('components.index.sale-event.event')--}}
+                    {{--@endcomponent--}}
 
-                    @component('components.index.products.products')
-                    @endcomponent
+                    {{--@component('components.index.products.products')--}}
+                    {{--@endcomponent--}}
 
-                    @component('components.index.product.product')
-                    @endcomponent
+                    {{--@component('components.index.product.product')--}}
+                    {{--@endcomponent--}}
 
                     @component('components.index.features.features')
                     @endcomponent

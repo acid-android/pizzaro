@@ -16,7 +16,9 @@
                                             class="fa fa-cutlery"></i></span></li>
                             <li class="wc-layered-nav-term "><a href="#">Spicy</a> <span class="food-type-icon"><i
                                             class="fa fa-fire"></i></span></li>
-                            <li class="wc-layered-nav-term "><a href="#">Veg</a> <span class="food-type-icon"><i
+                            <li class="wc-layered-nav-term ">
+                                <a>Veg</a>
+                                <span class="food-type-icon"><i
                                             class="po po-veggie-icon"></i></span></li>
                         </ul>
                     </div>
@@ -29,50 +31,48 @@
                         <ul class="products">
                             @foreach($products->chunk(3) as $chunk)
                                 @foreach($chunk as $product)
-                                    <li class="product @if($loop->first) first @endif @if($loop->last)last @endif">
+                                    <li class="product @if($loop->first) first @endif @if($loop->last)last @endif" data-product_id="{{ $product->id }}">
                                         <div class="product-outer">
                                             <div class="product-inner">
                                                 <div class="product-image-wrapper">
-                                                    <a href="{{route('product')}}" class="woocommerce-LoopProduct-link">
+                                                    <a href="{{route('product', ['key' => $product->key])}}"
+                                                       class="woocommerce-LoopProduct-link">
                                                         <img src="{{asset($product->image)}}" width="350" height="350"
                                                              class="img-responsive" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="product-content-wrapper">
-                                                    <a href="{{route('product')}}" class="woocommerce-LoopProduct-link">
-                                                        <h3>{{ $product->name }}</h3>
-                                                        <div itemprop="description">
-                                                            <p style="max-height: none;">{{ $product->description }}</p>
-                                                        </div>
-                                                        <div class="yith_wapo_groups_container">
-                                                            <div class="ywapo_group_container ywapo_group_container_radio form-row form-row-wide "
-                                                                 data-requested="1" data-type="radio" data-id="1"
-                                                                 data-condition="">
-                                                                <h3><span>Pick Size</span></h3>
+                                                    {{--<a href="{{route('product', ['key' => $product->key])}}" class="woocommerce-LoopProduct-link">--}}
+                                                    <h3>{{ $product->name }}</h3>
+                                                    <div itemprop="description">
+                                                        <p style="max-height: none;">{{ $product->description }}</p>
+                                                    </div>
+                                                    <div class="yith_wapo_groups_container">
+                                                        <div class="ywapo_group_container ywapo_group_container_radio form-row form-row-wide "
+                                                             data-requested="1" data-type="radio" data-id="1"
+                                                             data-condition="">
+                                                            <h3><span>Pick Size</span></h3>
+                                                            @foreach($product->items as $item)
                                                                 <div class="ywapo_input_container ywapo_input_container_radio">
 
-                                                                    <span class="ywapo_label_tag_position_after"><span
-                                                                                class="ywapo_option_label ywapo_label_position_after">22 cm</span></span>
+                                                                    <span class="ywapo_label_tag_position_after"
+                                                                          style="cursor: pointer "
+                                                                          data-product_id="{{ $product->id }}" data-item_id="{{ $item->id }}"><span
+                                                                                class="ywapo_option_label ywapo_label_position_after">{{ $item->size }} {{ $item->dimension }}</span></span>
                                                                     <span class="ywapo_label_price"><span
                                                                                 class="woocommerce-Price-amount amount"><span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>19</span></span>
+                                                                                    class="woocommerce-Price-currencySymbol">$</span>{{ $item->price }}</span></span>
                                                                 </div>
-                                                                <div class="ywapo_input_container ywapo_input_container_radio">
-
-                                                                    <span class="ywapo_label_tag_position_after"><span
-                                                                                class="ywapo_option_label ywapo_label_position_after">29 cm</span></span>
-                                                                    <span class="ywapo_label_price"><span
-                                                                                class="woocommerce-Price-amount amount"><span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>25</span></span>
-                                                                </div>
-                                                            </div>
+                                                            @endforeach
                                                         </div>
-                                                    </a>
+                                                    </div>
                                                     <div class="hover-area">
-                                                        <a rel="nofollow" href="{{route('product')}}" data-quantity="1"
-                                                           data-product_id="{{ $product->id }}" data-product_sku=""
-                                                           class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
-                                                            to cart</a>
+                                                        <div data-quantity="1"
+                                                             data-product_id="{{ $product->id }}" data-product_sku=""
+                                                             class="button product_type_simple add_to_cart_button ajax_add_to_cart add-button disabled">
+                                                            Add
+                                                            to cart
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@
                         <!-- /.products -->
                         </ul>
                     </div>
-                    @if($products->count() > 1)
+                    @if($products->lastPage() > 1)
                         <nav class="woocommerce-pagination">
                             <ul class="page-numbers">
                                 @if($products->currentPage() != 1)
@@ -100,7 +100,8 @@
                                 @endif
                                 @if($products->currentPage() != $products->lastPage())
                                     <li><a class="page-numbers" href="{{ $products->nextPageUrl() }}">></a></li>
-                                    <li><a class="next page-numbers" href="?page={{ $products->lastPage() }}">>></a></li>
+                                    <li><a class="next page-numbers" href="?page={{ $products->lastPage() }}">>></a>
+                                    </li>
                                 @endif
                             </ul>
                         </nav>
@@ -113,4 +114,6 @@
         <!-- .col-full -->
     </div>
 
+
 @endsection
+

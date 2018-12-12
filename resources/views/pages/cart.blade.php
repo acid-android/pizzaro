@@ -4,6 +4,9 @@
 
 @section('content')
 
+
+@inject('cart', '\App\Services\Cart')
+
 <div id="content" class="site-content" tabindex="-1" >
     <div class="col-full">
         <div class="pizzaro-breadcrumb">
@@ -12,7 +15,6 @@
                 <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>Cart
             </nav>
         </div>
-        <!-- .woocommerce-breadcrumb -->
         <div id="primary" class="content-area">
             <main id="main" class="site-main" >
                 <div class="pizzaro-order-steps">
@@ -32,7 +34,7 @@
                     <div class="entry-content">
                         <div class="woocommerce">
                             <form>
-                                <table class="shop_table shop_table_responsive cart" >
+                                <table class="shop_table shop_table_responsive cart order-cart" >
                                     <thead>
                                     <tr>
                                         <th class="product-remove">&nbsp;</th>
@@ -44,82 +46,45 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="cart_item">
+
+                                    @foreach($cart->getCart()['items'] as $id => $item)
+                                    <tr class="cart_item" data-item-id="{{ $id }}" id="item_{{ $id }}">
                                         <td class="product-remove">
-                                            <a href="#" class="remove" >&times;</a>
+                                            <div class="remove static-remove" style="cursor: pointer;font-size: 24px" data-item_id="{{ $id }}">&times;</div>
                                         </td>
                                         <td class="product-thumbnail">
-                                            <a href="{{route('product')}}">
-                                                <img width="180" height="180" src="assets/images/products/1.png" alt=""/>
+                                            <a href="{{route('product', ['key' => $item['key']])}}">
+                                                <img width="180" height="180" src="{{ $item['image'] }}" alt=""/>
                                             </a>
                                         </td>
                                         <td class="product-name" data-title="Product">
-                                            <a href="{{route('product')}}">Bacon Burger</a>
+                                            <a href="{{route('product',['key' => $item['key']])}}">Bacon Burger</a>
                                             <dl class="variation">
-                                                <dt class="variation-Baseprice">Base price:</dt>
-                                                <dd class="variation-Baseprice">
-                                                    <p><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>0.00</span></p>
-                                                </dd>
-                                                <dt class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">Pick Size ( <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>25.90</span> ):
+                                                <dt class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">Pick Size ( <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>{{ $item['price'] }}</span> ):
                                                 </dt>
                                                 <dd class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">
-                                                    <p>29  cm</p>
+                                                    <p>{{ $item['size'] }}  {{ $item['dimension'] }}</p>
                                                 </dd>
                                             </dl>
                                         </td>
                                         <td class="product-price" data-title="Price">
-                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>25.90</span>
+                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ $item['price'] }}</span>
                                         </td>
                                         <td class="product-quantity" data-title="Quantity">
                                             <div class="qty-btn">
                                                 <label>Quantity</label>
                                                 <div class="quantity">
-                                                    <input type="number" value="1" title="Qty" class="input-text qty text"/>
+                                                    <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="decrease-button" data-item_id="{{ $id }}" data-quantity="1">-</span>
+                                                    <span class="quantity-span" style="padding: 5px; width: 3em; height: auto; font-weight: normal; text-align: center;">{{ $item['quantity'] }}</span>
+                                                    <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="increase-button" data-item_id="{{ $id }}" data-quantity="1">+</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="product-subtotal" data-title="Total">
-                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>25.90</span>
+                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span><span class="product-total-price">{{ $item['quantity'] * $item['price'] }}</span></span>
                                         </td>
                                     </tr>
-                                    <tr class="cart_item">
-                                        <td class="product-remove">
-                                            <a href="#" class="remove">&times;</a>
-                                        </td>
-                                        <td class="product-thumbnail">
-                                            <a href="{{route('product')}}">
-                                                <img width="180" height="180" src="assets/images/products/2.jpg" alt="" />
-                                            </a>
-                                        </td>
-                                        <td class="product-name" data-title="Product">
-                                            <a href="{{route('product')}}">Pepperoni Pizza</a>
-                                            <dl class="variation">
-                                                <dt class="variation-Baseprice">Base price:</dt>
-                                                <dd class="variation-Baseprice">
-                                                    <p><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>0.00</span></p>
-                                                </dd>
-                                                <dt class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">Pick Size ( <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>25.90</span> ):
-                                                </dt>
-                                                <dd class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">
-                                                    <p>29  cm</p>
-                                                </dd>
-                                            </dl>
-                                        </td>
-                                        <td class="product-price" data-title="Price">
-                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>25.90</span>
-                                        </td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="qty-btn">
-                                                <label>Quantity</label>
-                                                <div class="quantity">
-                                                    <input type="number"  value="1" title="Qty" class="input-text qty text" size="4" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Total">
-                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>25.90</span>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                     <tr>
                                         <td colspan="6" class="actions">
                                             <div class="coupon">
@@ -141,16 +106,10 @@
                                 <div class="cart_totals ">
                                     <h2>Cart Totals</h2>
                                     <table  class="shop_table shop_table_responsive">
-                                        <tr class="cart-subtotal">
-                                            <th>Subtotal</th>
-                                            <td data-title="Subtotal">
-                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>51.80</span>
-                                            </td>
-                                        </tr>
                                         <tr class="order-total">
                                             <th>Total</th>
                                             <td data-title="Total">
-                                                <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>51.80</span></strong>
+                                                <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span><span class="total-price cart-static-total-price">{{ $cart->getCart()['total'] }}</span></span></strong>
                                             </td>
                                         </tr>
                                     </table>
@@ -170,5 +129,10 @@
     </div>
     <!-- #primary -->
 </div>
+
+@endsection
+
+@section('scripts')
+    <script type="text/javascript" src="{{asset('assets/js/cart/order_cart_component.js')}}"></script>
 
 @endsection
