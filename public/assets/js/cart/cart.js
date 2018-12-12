@@ -1,5 +1,3 @@
-let token = $('meta[name="cart-token"]').attr('content');
-
 let Item = function (product_id, item_id) {
     this.product_id = product_id;
     this.item_id = item_id;

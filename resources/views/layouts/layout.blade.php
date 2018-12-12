@@ -15,7 +15,6 @@
           rel="stylesheet">
     <link rel="shortcut icon" href="{{'assets/images/fav-icon.png'}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="cart-token" content="{{ session()->getId() }}">
 </head>
 <body class="@yield('body-class')">
 <div id="page" class="hfeed site">
