@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\URL;
 class Cart
 {
     protected $cart;
+
     protected $total;
     protected $count;
 
@@ -57,12 +58,12 @@ class Cart
         ];
     }
 
-    public function push($items)
+    public function push($items, $quantity)
     {
         foreach ($items as $item) {
             $id = $item->id;
             if (isset($this->cart['items'][$id])) {
-                $this->cart['items'][$id]['quantity']++;
+                $this->cart['items'][$id]['quantity'] += $quantity;
             } else {
                 $this->cart['items'][$id]['price'] = $item->price;
                 $this->cart['items'][$id]['size'] = $item->size;
@@ -70,7 +71,7 @@ class Cart
                 $this->cart['items'][$id]['name'] = $item->product->name;
                 $this->cart['items'][$id]['key'] = $item->product->key;
                 $this->cart['items'][$id]['image'] = URL::to('/') . $item->product->image;
-                $this->cart['items'][$id]['quantity'] = 1;
+                $this->cart['items'][$id]['quantity'] = $quantity;
             }
         }
 
@@ -140,8 +141,6 @@ class Cart
 
         $this->updateCart();
 
-        $this->cookie = cookie('cart', json_encode($this->cart), 10000);
-
         $this->setResponse($response);
     }
 
@@ -159,23 +158,5 @@ class Cart
         ];
 
         $this->setResponse($response);
-    }
-
-    public function arrayCastRecursive($array)
-    {
-        if (is_array($array)) {
-            foreach ($array as $key => $value) {
-                if (is_array($value)) {
-                    $array[$key] = $this->arrayCastRecursive($value);
-                }
-                if ($value instanceof \stdClass) {
-                    $array[$key] = $this->arrayCastRecursive((array)$value);
-                }
-            }
-        }
-        if ($array instanceof \stdClass) {
-            return $this->arrayCastRecursive((array)$array);
-        }
-        return $array;
     }
 }

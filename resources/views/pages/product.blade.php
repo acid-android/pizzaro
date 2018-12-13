@@ -57,11 +57,10 @@
                                             <h3><span>Select Size</span></h3>
                                             @foreach($product->items as $item)
                                             <div class="ywapo_input_container ywapo_input_container_radio">
-                                                <input data-typeid="{{ $item->id }}" data-price="{{ $item->price }}" data-pricetype="fixed" data-index="0" type="radio" name="price" value="0" required checked class="ywapo_input ywapo_input_radio ywapo_price_fixed"   />
-                                                <label class="ywapo_label_tag_position_after">
+                                                <span class="ywapo_label_tag_position_after" style="cursor: pointer;" data-product_id="{{ $product->id }}" data-item_id="{{ $item->id }}">
                                                     <span class="ywapo_option_label ywapo_label_position_after">{{ $item->size }} {{ $item->dimension }}</span>
 
-                                                </label>
+                                                </span>
                                                 <span class="ywapo_label_price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ $item->price }}</span></span>
                                             </div>
                                             @endforeach
@@ -76,13 +75,17 @@
                                 <div class="qty-btn">
                                     <label>Quantity</label>
                                     <div class="quantity">
-                                        <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="decrease-button" data-item_id="" data-quantity="1">-</span>
-                                        <span class="quantity-span" style="padding: 5px; width: 3em; height: auto; font-weight: normal; text-align: center;">1</span>
-                                        <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="increase-button" data-item_id="" data-quantity="1">+</span>
+                                        <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="decrease-button single-product-decrease" data-item_id="" data-quantity="1">-</span>
+                                        <span class="quantity-span single-product-quantity" style="padding: 5px; width: 3em; height: auto; font-weight: normal; text-align: center;">1</span>
+                                        <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="increase-button single-product-increase" data-item_id="" data-quantity="1">+</span>
                                     </div>
                                 </div>
-                                <input type="hidden" name="add-to-cart" value="50" />
-                                <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+                                <div data-quantity="1"
+                                     data-product_id="{{ $product->id }}" data-product_sku=""
+                                     class="button product_type_simple add_to_cart_button ajax_add_to_cart add-button disabled">
+                                    Add
+                                    to cart
+                                </div>
                             </form>
                         </div>
                         <!-- .summary -->

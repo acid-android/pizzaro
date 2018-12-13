@@ -34,7 +34,7 @@
 <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
 
-<script type="text/javascript" src="{{asset('assets/js/social.share.min.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('assets/js/social.share.min.js')}}"></script>--}}
 <script type="text/javascript" src="{{asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/scripts.min.js')}}"></script>
 

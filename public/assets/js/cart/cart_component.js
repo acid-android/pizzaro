@@ -1,3 +1,5 @@
+let requestQuantity = 1;
+
 let Item = function (product_id, item_id) {
     this.product_id = product_id;
     this.item_id = item_id;
@@ -30,6 +32,7 @@ let ItemsGroup = function (product_id, items) {
         if (trigger) {
             $(this.addToCartButton).removeClass('disabled');
             this.activeAddButton = true;
+
         } else {
             if (!this.addToCartButton.hasClass('disabled')) {
                 $(this.addToCartButton).addClass('disabled');
@@ -37,16 +40,28 @@ let ItemsGroup = function (product_id, items) {
             }
         }
     };
+
+    this.disableActive = function () {
+        this.items.forEach(function (item, i, arr) {
+            if (item.active) {
+                item.switchActive();
+            }
+        });
+        if (!this.addToCartButton.hasClass('disabled')) {
+            $(this.addToCartButton).addClass('disabled');
+            this.activeAddButton = false;
+        }
+    }
 };
 
 let CartComponent = function () {
-
-    this.increaseButton = $(`.modal-cart tr.cart_item .quantity .increase-button`);
-
-    this.decreaseButton = $(`.modal-cart tr.cart_item .quantity .decrease-button`);
-
-    this.removeButton = $('.modal-cart .product-remove .static-remove');
     this.items = [];
+
+    this.increaseButton = $(`.increase-button.modal-button`);
+
+    this.decreaseButton = $(`.decrease-button.modal-button`);
+
+    this.removeButton = $('.product-remove .remove-item')
 
     this.close = $('.close-cart-modal');
     this.component = $('.modal-cart');
@@ -167,9 +182,9 @@ let CartItem = function () {
                                 <div class="qty-btn">
                                     <label>Quantity</label>
                                     <div class="quantity" style="display: flex; flex-direction: row; align-items: center">
-                                    <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="decrease-button" data-item_id="${this.item_id}" data-quantity="1">-</span>    
+                                    <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="decrease-button modal-button" data-item_id="${this.item_id}" data-quantity="1">-</span>    
                                        <span class="quantity-span" style="padding: 5px; width: 3em; height: auto; font-weight: normal; text-align: center;">${this.quantity}</span>
-                                    <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="increase-button" data-item_id="${this.item_id}" data-quantity="1">+</span>
+                                    <span style="margin: 0 5px; cursor: pointer; font-size: 1.25em;" class="increase-button modal-button" data-item_id="${this.item_id}" data-quantity="1">+</span>
 
                                     </div>
                                 </div>
@@ -225,11 +240,6 @@ let HeaderCartComponent = function () {
        this.count.html(`${count} items`);
        this.price.html(`$${total_price}`);
    };
-
-   this.updateStaticCart = function (count, total_price) {
-       this.count.html(`${count} items`);
-       this.price.html(`$${total_price}`);
-   }
 };
 
 let OrderCartItemComponent = function () {
@@ -240,96 +250,6 @@ let OrderCartItemComponent = function () {
     this.decreaseButton = $(`table.order-cart tr.cart_item .quantity .decrease-button`);
 
     this.removeButton = $('table.order-cart .product-remove .static-remove');
-
-    this.increaseRequest = function (id, quantity) {
-        let request = $.ajax({
-            url: "/pizza/public/api/cart/increase",
-            method: "POST",
-            dataType: "json",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            data: {
-                id: id,
-                quantity: quantity
-            }
-        });
-        request.done(function (msg) {
-            $('table.order-cart #item_' + id + ' .product-quantity .quantity-span').html(msg.quantity);
-            $('table.order-cart #item_' + id + ' .product-total-price').html(msg.price);
-            $('.cart_totals .cart-static-total-price').html(msg.total);
-            headerCart.updateStaticCart(msg.count, msg.total);
-        });
-
-        request.fail(function (jqXHR, textStatus) {
-            console.log("Request failed: " + textStatus);
-        });
-    };
-
-    this.decreaseRequest = function (id, quantity) {
-        let request = $.ajax({
-            url: "/pizza/public/api/cart/decrease",
-            method: "POST",
-            dataType: "json",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            data: {
-                id: id,
-                quantity: quantity
-            }
-        });
-        request.done(function (msg) {
-            if (msg.quantity == 0) {
-                $('table.order-cart #item_' + id).remove();
-                $('.cart_totals .cart-static-total-price').html(msg.total);
-                headerCart.updateStaticCart(msg.count, msg.total);
-
-            } else {
-                $('table.order-cart #item_' + id + ' .product-quantity .quantity-span').html(msg.quantity);
-                $('table.order-cart #item_' + id + ' .product-total-price').html(msg.price);
-                $('.cart_totals .cart-static-total-price').html(msg.total);
-                headerCart.updateStaticCart(msg.count, msg.total);
-            }
-
-        });
-
-        request.fail(function (jqXHR, textStatus) {
-            console.log("Request failed: " + textStatus);
-        });
-    };
-
-    this.removeRequest = function (id) {
-        let request = $.ajax({
-            url: "/pizza/public/api/cart/remove",
-            method: "POST",
-            dataType: "json",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            data: {
-                id: id
-            }
-        });
-        request.done(function (msg) {
-            if (msg.quantity == 0) {
-                $('table.order-cart #item_' + id).remove();
-                $('.cart_totals .cart-static-total-price').html(msg.total);
-                headerCart.updateStaticCart(msg.count, msg.total);
-
-            } else {
-                $('table.order-cart #item_' + id + ' .product-quantity .quantity-span').html(msg.quantity);
-                $('table.order-cart #item_' + id + ' .product-total-price').html(msg.price);
-                $('.cart_totals .cart-static-total-price').html(msg.total);
-                headerCart.updateStaticCart(msg.count, msg.total);
-
-            }
-        });
-
-        request.fail(function (jqXHR, textStatus) {
-            console.log("Request failed: " + textStatus);
-        });
-    };
 };
 
 let Requests = function () {
@@ -342,7 +262,8 @@ let Requests = function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             data: {
-                id: itemIds
+                id: itemIds,
+                quantity: requestQuantity
             }
         });
         request.done(function (msg) {
@@ -367,6 +288,10 @@ let Requests = function () {
             cartComponent.total_price = msg.total;
             cartComponent.show();
             changeQuantity();
+            if($('body').hasClass('single-product')) {
+                requestQuantity = 1;
+                $('.single-product-quantity').text(requestQuantity)
+            }
         });
 
         request.fail(function (jqXHR, textStatus) {
@@ -487,12 +412,20 @@ $.each($('li.product'), function (i, val) {
 });
 
 
+
 $('.ywapo_label_tag_position_after').on('click', function () {
+
     let productId = $(this).data('product_id');
     let itemId = $(this).data('item_id');
 
-    products[productId].items[itemId].switchActive();
-    products[productId].switchButton();
+    if(products[productId].items[itemId].active){
+        products[productId].disableActive();
+        return;
+    } else {
+        products[productId].disableActive();
+        products[productId].items[itemId].switchActive();
+        products[productId].switchButton();
+    }
 });
 
 $('.add-button').on('click', function () {
@@ -538,23 +471,58 @@ function changeQuantity() {
     });
 
 
-    $('.increase-button').on('click', function () {
+    cartComponent.increaseButton.on('click', function () {
         let id = $(this).data('item_id');
         let quantity = $(this).data('quantity');
 
         requests.increaseRequest(id, quantity, cartSpans);
     });
 
-    $('.decrease-button').on('click', function () {
+    cartComponent.decreaseButton.on('click', function () {
         let id = $(this).data('item_id');
         let quantity = $(this).data('quantity');
         requests.decreaseRequest(id, quantity, cartSpans);
     });
 
-    $('.product-remove .remove-item').on('click', function () {
+    cartComponent.removeButton.on('click', function () {
         let id = $(this).data('item_id');
         requests.removeRequest(id, cartSpans)
     });
 }
 
+function singleProductItems()
+{
+    let itemsArr = [];
+    let items = $('.single-product-wrapper .ywapo_label_tag_position_after');
+    let product_id = 0;
+    $.each(items, function (index, item) {
+        let item_id = $(item).data('item_id');
+        product_id = $(this).data('product_id');
+
+        itemsArr[item_id] = new Item(product_id, item_id);
+    });
+
+    products[product_id] = new ItemsGroup(product_id, itemsArr);
+
+    $('.single-product-increase').on('click', function () {
+        let quantity = $('.single-product-quantity').text();
+        quantity++;
+        $('.quantity-span').text(quantity);
+        requestQuantity = quantity;
+    });
+
+    $('.single-product-decrease').on('click', function () {
+        let quantity = $('.single-product-quantity').text();
+        if(quantity == 1) {
+            return;
+        }
+        quantity--;
+        $('.single-product-quantity').text(quantity);
+        requestQuantity = quantity;
+    });
+}
+
+if($('body').hasClass('single-product')) {
+    singleProductItems();
+}
 changeQuantity();

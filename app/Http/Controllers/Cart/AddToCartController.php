@@ -22,12 +22,13 @@ class AddToCartController extends Controller
         /** @var Cart $cart */
 
         $id = $request->post('id');
+        $quantity = $request->post('quantity');
 
         $items = Item::find($id);
 
         $cart = App::make('\\' . Cart::class);
 
-        $cart->push($items);
+        $cart->push($items,$quantity);
 
         return $cart->getResponse();
     }
