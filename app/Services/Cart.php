@@ -13,17 +13,17 @@ class Cart
     protected $total;
     protected $count;
 
+    /** @var CartStorage */
     protected $storage;
 
 
     protected $response;
 
-    public function __construct($storage)
+    public function __construct(CartStorage $storage)
     {
         $this->storage = $storage;
 
-        if ($this->storage == null) {
-            $this->storage = new CartStorage();
+        if (!$cartStorage = CartStorage::find(session()->getId())) {
             $this->storage->id = session()->getId();
             $this->storage->item = serialize([
                 'total' => 0,
@@ -31,6 +31,8 @@ class Cart
                 'items' => []
             ]);
             $this->storage->save();
+        } else {
+            $this->storage = $cartStorage;
         }
 
         $this->cart = unserialize($this->storage->item);
@@ -158,5 +160,10 @@ class Cart
         ];
 
         $this->setResponse($response);
+    }
+
+    public function erase()
+    {
+        $this->storage->delete();
     }
 }

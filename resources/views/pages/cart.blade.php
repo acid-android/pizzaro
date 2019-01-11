@@ -92,7 +92,6 @@
                                                 <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code" />
                                                 <input type="submit" class="button" name="apply_coupon" value="Apply Coupon" />
                                             </div>
-                                            <input type="submit" class="button" name="update_cart" value="Update Cart" />
                                             <div class="wc-proceed-to-checkout">
                                                 <a href="{{route('checkout')}}" class="checkout-button button alt wc-forward">Proceed to Checkout</a>
                                             </div>

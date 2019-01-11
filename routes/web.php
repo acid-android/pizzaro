@@ -12,10 +12,9 @@
 */
 
 
-App::bind('\\' . \App\Services\Cart::class, function (){
-//    return new \App\Services\Cart(\Illuminate\Support\Facades\Cookie::get('cart'));
-    return new \App\Services\Cart(\App\Cart\CartStorage::find(session()->getId()));
-});
+//App::bind('\\' . \App\Services\Cart::class, function (){
+//    return new \App\Services\Cart();
+//});
 
 
 
@@ -67,9 +66,7 @@ Route::get('/checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
 
-Route::get('/order-received', function () {
-    return view('pages.order-received');
-})->name('order-received');
+Route::post('/order-received', 'Order\OrderController')->name('order-received');
 
 
 Route::get('/send-email-to-subscriber', function (\Illuminate\Http\Request $request) {
@@ -79,3 +76,28 @@ Route::get('/send-email-to-subscriber', function (\Illuminate\Http\Request $requ
 })->name('send-email-to-subscriber');
 
 //Route::get('/add-to-cart/{id}', "\\" . \App\Http\Controllers\Cart\AddToCartController::class)->name('api-add-to-cart');
+Auth::routes();
+
+Route::get('/admin', 'Admin\HomeController@index')->name('admin-home');
+
+Route::get('/admin/food', 'Admin\Food\FoodController')->name('admin-food');
+
+Route::get('/admin/food/add', 'Admin\Food\FoodAddController')->name('admin-food-add');
+
+Route::post('/admin/food/add', 'Admin\Food\FoodAddHandlerController')->name('admin-food-add');
+
+Route::get('/admin/food/remove/{id}', 'Admin\Food\FoodRemoveController')->name('admin-food-remove');
+
+Route::get('/admin/food/update/{id}', 'Admin\Food\FoodUpdateController')->name('admin-food-update');
+
+Route::post('/admin/food/update/{id}', 'Admin\Food\FoodUpdateController@store')->name('admin-food-update-post');
+
+Route::get('/admin/menu', 'Admin\Menu\MenuController')->name('admin-menu');
+
+Route::get('/admin/menu/add', 'Admin\Menu\MenuAddController')->name('admin-menu-add');
+Route::post('/admin/menu/add', 'Admin\Menu\MenuAddHandlerController')->name('admin-menu-add-handler');
+Route::get('/admin/menu/update/{id}', 'Admin\Menu\MenuUpdateController')->name('admin-menu-update');
+Route::post('/admin/menu/update/{id}', 'Admin\Menu\MenuUpdateController@store')->name('admin-menu-update-post');
+Route::get('/admin/menu/remove/{id}', 'Admin\Menu\MenuRemoveController')->name('admin-menu-remove');
+
+Route::get('/admin/orders', 'Admin\Order\OrderController')->name('admin-orders');

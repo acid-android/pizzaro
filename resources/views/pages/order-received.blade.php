@@ -39,12 +39,12 @@
                                 <p class="woocommerce-thankyou-order-received">Thank you. Your order has been
                                     received.</p>
                                 <ul class="woocommerce-thankyou-order-details order_details">
-                                    <li class="order">Order Number:<strong>645</strong></li>
-                                    <li class="date">Date:<strong>February 2, 2017</strong></li>
+                                    <li class="order">Order Number:<strong>{{ $model->id }}</strong></li>
+                                    <li class="date">Date:<strong>{{ $model->created_at }}</strong></li>
                                     <li class="total">Total:<strong><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>25.90</span></strong>
+                                                        class="woocommerce-Price-currencySymbol">{{ $order['total'] }}</span></span></strong>
                                     </li>
-                                    <li class="method">Payment Method:<strong>Direct Bank Transfer</strong></li>
+                                    <li class="method">Payment Method:<strong>{{ $model->payment }}</strong></li>
                                 </ul>
                                 <div class="clear"></div>
                                 <p>Make your payment directly into our bank account. Please use your Order ID as the
@@ -59,40 +59,36 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($order['items'] as $item)
                                     <tr class="order_item">
                                         <td class="product-name">
-                                            <a href="single-product-v1.html">Country Burger</a> <strong
-                                                    class="product-quantity">× 1</strong>
+                                            <span>{{ $item['name'] }}</span> <strong
+                                                    class="product-quantity">× {{ $item['quantity'] }}</strong>
                                             <dl class="variation">
                                                 <dt class="variation-PickSize362590"><span id="1">Pick Size</span>
                                                     (<span class="woocommerce Price amount amount"><span
-                                                                class="woocommerce Price currencySymbol">$</span>25.90</span>):
+                                                                class="woocommerce Price currencySymbol">$</span>{{ $item['price'] }}</span>):
                                                 </dt>
                                                 <dd class="variation-PickSize362590">
-                                                    <p>29 cm</p>
+                                                    <p>{{ $item['size'] }} {{ $item['dimension'] }}</p>
                                                 </dd>
                                             </dl>
                                         </td>
                                         <td class="product-total"><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>25.90</span>
+                                                        class="woocommerce-Price-currencySymbol">$</span>{{ $item['price'] * $item['quantity'] }}</span>
                                         </td>
                                     </tr>
+                                    @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th scope="row">Subtotal:</th>
-                                        <td><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>25.90</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th scope="row">Payment Method:</th>
-                                        <td>Direct Bank Transfer</td>
+                                        <td>{{ $model->payment }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Total:</th>
                                         <td><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>25.90</span>
+                                                        class="woocommerce-Price-currencySymbol">$</span>{{ $order['total'] }}</span>
                                         </td>
                                     </tr>
                                     </tfoot>
@@ -104,19 +100,21 @@
                                     <tbody>
                                     <tr>
                                         <th>Email:</th>
-                                        <td>anas@transvelo.com</td>
+                                        <td>{{ $model->customer->email }}</td>
                                     </tr>
                                     <tr>
                                         <th>Telephone:</th>
-                                        <td>9547399295</td>
+                                        <td>{{ $model->customer->phone }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 <header class="title">
                                     <h3>Billing Address</h3>
                                 </header>
-                                <address>Transvelo<br>Mohamed Anas<br>Transvelo<br>No 27 Maraicoir Street, Mannady<br>chennai
-                                    - 600001<br>Tamil Nadu, India
+                                <address>
+                                    {{ $model->address->street }} street
+                                    <br>
+                                    apartment {{ $model->address->apartment }}
                                 </address>
                             </div>
                         </div>

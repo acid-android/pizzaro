@@ -1,3 +1,5 @@
+@inject('cart', '\App\Services\Cart')
+
 @extends('layouts.layout')
 
 @section('body-class', 'woocommerce-checkout')
@@ -30,70 +32,40 @@
                 <div id="post-9" class="post-9 page type-page status-publish hentry">
                     <div class="entry-content">
                         <div class="woocommerce">
-                            <form name="checkout"  class="checkout woocommerce-checkout" action="#" enctype="multipart/form-data">
+                            <form name="checkout"  class="checkout woocommerce-checkout" action="{{ route('order-received') }}" enctype="multipart/form-data" method="POST">
+                                @csrf
                                 <div class="col2-set" id="customer_details">
                                     <div class="col-1">
                                         <div class="woocommerce-billing-fields">
                                             <h3>Billing Details</h3>
                                             <p class="form-row form-row form-row-first validate-required" id="billing_first_name_field">
                                                 <label for="billing_first_name" class="">First Name </label>
-                                                <input type="text" class="input-text " name="billing_first_name" id="billing_first_name" placeholder=""  autocomplete="given-name" value=""  />
+                                                <input type="text" class="input-text " name="first_name" id="billing_first_name" placeholder=""  autocomplete="given-name" value=""  />
                                             </p>
                                             <p class="form-row form-row form-row-last validate-required" id="billing_last_name_field">
                                                 <label for="billing_last_name" class="">Last Name </label>
-                                                <input type="text" class="input-text " name="billing_last_name" id="billing_last_name" placeholder=""  autocomplete="family-name" value=""  />
+                                                <input type="text" class="input-text " name="last_name" id="billing_last_name" placeholder=""  autocomplete="family-name" value=""  />
                                             </p>
                                             <div class="clear"></div>
-                                            <p class="form-row form-row form-row-wide" id="billing_company_field">
-                                                <label for="billing_company" class="">Company Name</label>
-                                                <input type="text" class="input-text " name="billing_company" id="billing_company" placeholder=""  autocomplete="organization" value=""  />
-                                            </p>
+
                                             <p class="form-row form-row form-row-first validate-required validate-email" id="billing_email_field">
                                                 <label for="billing_email" class="">Email Address </label>
-                                                <input type="email" class="input-text " name="billing_email" id="billing_email" placeholder=""  autocomplete="email" value=""  />
+                                                <input type="email" class="input-text " name="email" id="billing_email" placeholder=""  autocomplete="email" value=""  />
                                             </p>
                                             <p class="form-row form-row form-row-last validate-required validate-phone" id="billing_phone_field">
                                                 <label for="billing_phone" class="">Phone </label>
-                                                <input type="tel" class="input-text " name="billing_phone" id="billing_phone" placeholder=""  autocomplete="tel" value=""  />
+                                                <input type="tel" class="input-text " name="phone" id="billing_phone" placeholder=""  autocomplete="tel" value=""  />
                                             </p>
                                             <div class="clear"></div>
-                                            <p class="form-row form-row form-row-wide address-field update_totals_on_change validate-required" id="billing_country_field">
-                                                <label for="billing_country" class="">Country </label>
-                                                <input type="text" value="" placeholder="" id="billing_country" name="billing_phone" class="input-text ">
-                                            </p>
+
                                             <div class="clear"></div>
                                             <p class="form-row form-row form-row-wide address-field validate-required" id="billing_address_1_field">
                                                 <label for="billing_address_1" class="">Address </label>
-                                                <input type="text" class="input-text " name="billing_address_1" id="billing_address_1" placeholder="Street address"  autocomplete="address-line1" value=""  />
+                                                <input type="text" class="input-text " name="street" id="billing_address_1" placeholder="Street address"  autocomplete="address-line1" value=""  />
                                             </p>
                                             <p class="form-row form-row form-row-wide address-field" id="billing_address_2_field">
-                                                <input type="text" class="input-text " name="billing_address_2" id="billing_address_2" placeholder="Apartment, suite, unit etc. (optional)"  autocomplete="address-line2" value=""  />
+                                                <input type="text" class="input-text " name="apartment" id="billing_address_2" placeholder="Apartment, suite, unit etc. (optional)"  autocomplete="address-line2" value=""  />
                                             </p>
-                                            <p class="form-row form-row form-row-wide address-field validate-required" id="billing_city_field">
-                                                <label for="billing_city" class="">Town / City </label>
-                                                <input type="text" class="input-text " name="billing_city" id="billing_city" placeholder=""  autocomplete="address-level2" value=""  />
-                                            </p>
-                                            <p class="form-row form-row form-row-first address-field validate-required validate-state" id="billing_state_field">
-                                                <label for="billing_state" class="">State / County </label>
-                                                <input type="text" value="" placeholder="" id="billing_state" name="billing_phone" class="input-text ">
-                                            </p>
-                                            <p class="form-row form-row form-row-last address-field validate-required validate-postcode" id="billing_postcode_field">
-                                                <label for="billing_postcode" class="">Postcode / ZIP </label>
-                                                <input type="text" class="input-text " name="billing_postcode" id="billing_postcode" placeholder=""  autocomplete="postal-code" value="DFSAF@GMAIL.COM"  />
-                                            </p>
-                                            <div class="clear"></div>
-                                            <p class="form-row form-row-wide create-account">
-                                                <input class="input-checkbox" id="createaccount"  type="checkbox" name="createaccount" value="1" />
-                                                <label for="createaccount" class="checkbox">Create an account?</label>
-                                            </p>
-                                            <div class="create-account">
-                                                <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                                                <p class="form-row form-row validate-required" id="account_password_field">
-                                                    <label for="account_password" class="">Account password </label>
-                                                    <input type="password" class="input-text " name="account_password" id="account_password" placeholder="Password"   value=""  />
-                                                </p>
-                                                <div class="clear"></div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-2">
@@ -101,7 +73,7 @@
                                             <h3>Additional Information</h3>
                                             <p class="form-row form-row notes" id="order_comments_field">
                                                 <label for="order_comments" class="">Order Notes</label>
-                                                <textarea name="order_comments" class="input-text " id="order_comments" placeholder="Notes about your order, e.g. special notes for delivery."    rows="2" cols="5"></textarea>
+                                                <textarea name="notes" class="input-text " id="order_comments" placeholder="Notes about your order, e.g. special notes for delivery."    rows="2" cols="5"></textarea>
                                             </p>
                                         </div>
                                     </div>
@@ -116,58 +88,30 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($cart->getCart()['items'] as $id => $item)
                                         <tr class="cart_item">
                                             <td class="product-name">
-                                                Bacon Burger&nbsp;<strong class="product-quantity">&times; 1</strong>
+                                                {{ $item['name'] }}&nbsp;<strong class="product-quantity">&times; {{ $item['quantity'] }}</strong>
                                                 <dl class="variation">
-                                                    <dt class="variation-Baseprice">Base price:</dt>
-                                                    <dd class="variation-Baseprice">
-                                                        <p><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>0.00</span></p>
-                                                    </dd>
-                                                    <dt class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">Pick Size ( <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>25.90</span> ):
+                                                    <dt class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">Pick Size ( <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>{{ $item['price'] }}</span> ):
                                                     </dt>
                                                     <dd class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">
-                                                        <p>29  cm</p>
+                                                        <p>{{ $item['size'] }}  {{ $item['dimension'] }}</p>
                                                     </dd>
                                                 </dl>
                                             </td>
                                             <td class="product-total">
                                                 <span class="woocommerce-Price-amount amount">
-                                                <span class="woocommerce-Price-currencySymbol">&#36;</span>25.90</span>
+                                                <span class="woocommerce-Price-currencySymbol">&#36;</span>{{ $item['quantity'] * $item['price'] }}</span>
                                             </td>
                                         </tr>
-                                        <tr class="cart_item">
-                                            <td class="product-name">
-                                                Pepperoni Pizza&nbsp;<strong class="product-quantity">&times; 1</strong>
-                                                <dl class="variation">
-                                                    <dt class="variation-Baseprice">Base price:</dt>
-                                                    <dd class="variation-Baseprice">
-                                                        <p><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>0.00</span></p>
-                                                    </dd>
-                                                    <dt class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">Pick Size ( <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#036;</span>25.90</span> ):</dt>
-                                                    <dd class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">
-                                                        <p>29  cm</p>
-                                                    </dd>
-                                                </dl>
-                                            </td>
-                                            <td class="product-total">
-                                                <span class="woocommerce-Price-amount amount">
-                                                <span class="woocommerce-Price-currencySymbol">&#36;</span>25.90</span>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                         </tbody>
                                         <tfoot>
-                                        <tr class="cart-subtotal">
-                                            <th>Subtotal</th>
-                                            <td>
-                                                <span class="woocommerce-Price-amount amount">
-                                                <span class="woocommerce-Price-currencySymbol">&#36;</span>51.80</span>
-                                            </td>
-                                        </tr>
                                         <tr class="order-total">
                                             <th>Total</th>
                                             <td>
-                                                <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>51.80</span></strong>
+                                                <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ $cart->getCart()['total'] }}</span></strong>
                                             </td>
                                         </tr>
                                         </tfoot>
@@ -175,28 +119,28 @@
                                     <div id="payment" class="woocommerce-checkout-payment">
                                         <ul class="wc_payment_methods payment_methods methods">
                                             <li class="wc_payment_method payment_method_bacs">
-                                                <input id="payment_method_bacs" type="radio" class="input-radio" name="payment_method" value="bacs"  checked='checked' data-order_button_text="" />
+                                                <input id="payment_method_bacs" type="radio" class="input-radio" name="payment" value="bank"  checked='checked' data-order_button_text="" />
                                                 <label for="payment_method_bacs">Direct Bank Transfer</label>
                                                 <div class="payment_box payment_method_bacs" >
                                                     <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won&#8217;t be shipped until the funds have cleared in our account.</p>
                                                 </div>
                                             </li>
                                             <li class="wc_payment_method payment_method_cheque">
-                                                <input id="payment_method_cheque" type="radio" class="input-radio" name="payment_method" value="cheque"  data-order_button_text="" />
+                                                <input id="payment_method_cheque" type="radio" class="input-radio" name="payment" value="cheque"  data-order_button_text="" />
                                                 <label for="payment_method_cheque">Check Payments  </label>
                                                 <div class="payment_box payment_method_cheque" style="display:none;">
                                                     <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
                                                 </div>
                                             </li>
                                             <li class="wc_payment_method payment_method_cod">
-                                                <input id="payment_method_cod" type="radio" class="input-radio" name="payment_method" value="cod"  data-order_button_text="" />
+                                                <input id="payment_method_cod" type="radio" class="input-radio" name="payment" value="delivery"  data-order_button_text="" />
                                                 <label for="payment_method_cod">Cash on Delivery   </label>
                                                 <div class="payment_box payment_method_cod" style="display:none;">
                                                     <p>Pay with cash upon delivery.</p>
                                                 </div>
                                             </li>
                                             <li class="wc_payment_method payment_method_paypal">
-                                                <input id="payment_method_paypal" type="radio" class="input-radio" name="payment_method" value="paypal"  data-order_button_text="Proceed to PayPal" />
+                                                <input id="payment_method_paypal" type="radio" class="input-radio" name="payment" value="paypal"  data-order_button_text="Proceed to PayPal" />
                                                 <label for="payment_method_paypal">PayPal <img alt="PayPal Acceptance Mark" src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg"/>
                                                     <a title="What is PayPal?" onclick="javascript:window.open('https://www.paypal.com/us/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;" class="about_paypal" href="https://www.paypal.com/us/webapps/mpp/paypal-popup"   >What is PayPal?</a>  </label>
                                                 <div class="payment_box payment_method_paypal" style="display:none;">
@@ -213,7 +157,7 @@
                                                 <label for="terms" class="checkbox">I&rsquo;ve read and accept the <a href="terms-and-conditions.html" target="_blank">terms &amp; conditions</a> <span class="required">*</span></label>
                                                 <input type="hidden" name="terms-field" value="1" />
                                             </p>
-                                            <a class="button alt" href="{{route('order-received')}}" style="text-align: center;">Place order</a>
+                                            <input class="button alt" type="submit" style="text-align: center;" value="Place order">
                                         </div>
                                     </div>
                                 </div>

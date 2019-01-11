@@ -26,5 +26,11 @@ Route::post('/cart/increase', "\\" . \App\Http\Controllers\Cart\IncreaseItemCont
 
 Route::post('/cart/decrease', "\\" . \App\Http\Controllers\Cart\DecreaseItemController::class)->name('api-cart-decrease');
 
-Route::post('/cart/remove', "\\" . \App\Http\Controllers\Cart\RemoveItemController  ::class)->name('api-cart-decrease');
+Route::post('/cart/remove', "\\" . \App\Http\Controllers\Cart\RemoveItemController::class)->name('api-cart-decrease');
+
+Route::post('/items/add', 'Admin\Items\ItemsController@add')->name('items-add');
+
+Route::post('/items/update', 'Admin\Items\ItemsController@update')->name('items-update');
+
+Route::post('/items/remove', 'Admin\Items\ItemsController@remove')->name('items-remove');
 

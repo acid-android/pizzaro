@@ -56,13 +56,6 @@ let ItemsGroup = function (product_id, items) {
 
 let CartComponent = function () {
     this.items = [];
-
-    this.increaseButton = $(`.increase-button.modal-button`);
-
-    this.decreaseButton = $(`.decrease-button.modal-button`);
-
-    this.removeButton = $('.product-remove .remove-item')
-
     this.close = $('.close-cart-modal');
     this.component = $('.modal-cart');
     this.componentTable = $('.modal-cart .shop_table.shop_table_responsive.cart tbody');
@@ -268,7 +261,6 @@ let Requests = function () {
         });
         request.done(function (msg) {
             cartComponent.clearItems();
-            console.log(msg.items);
             $.each(msg.items, function (i, item) {
                 
                 let cartItem = new CartItem();
@@ -288,6 +280,7 @@ let Requests = function () {
             cartComponent.total_price = msg.total;
             cartComponent.show();
             changeQuantity();
+            headerCart.update(msg.count, msg.total);
             if($('body').hasClass('single-product')) {
                 requestQuantity = 1;
                 $('.single-product-quantity').text(requestQuantity)
@@ -471,20 +464,20 @@ function changeQuantity() {
     });
 
 
-    cartComponent.increaseButton.on('click', function () {
+    $(`.increase-button.modal-button`).on('click', function () {
         let id = $(this).data('item_id');
         let quantity = $(this).data('quantity');
 
         requests.increaseRequest(id, quantity, cartSpans);
     });
 
-    cartComponent.decreaseButton.on('click', function () {
+    $('.decrease-button.modal-button').on('click', function () {
         let id = $(this).data('item_id');
         let quantity = $(this).data('quantity');
         requests.decreaseRequest(id, quantity, cartSpans);
     });
 
-    cartComponent.removeButton.on('click', function () {
+    $('.product-remove .remove-item').on('click', function () {
         let id = $(this).data('item_id');
         requests.removeRequest(id, cartSpans)
     });
@@ -525,4 +518,7 @@ function singleProductItems()
 if($('body').hasClass('single-product')) {
     singleProductItems();
 }
-changeQuantity();
+
+$(document).ready(function () {
+    changeQuantity();
+});
